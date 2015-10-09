@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply from: "task.gradle"
+
+//[teamName]-[version].jar
+//version = 1.0.0
+
+dependencies {
+    compile fileTree(dir: new File(rootDir, 'library'), include: '*.jar')
+    compile fileTree(dir: new File(rootDir, 'library/util'), include: '*.jar')
+    compile fileTree(dir: new File(rootDir, 'library/util/default'), include: '*.jar')
+    compile fileTree(dir: new File(rootDir, 'library/rescue/core'), include: '*.jar')
+    compile fileTree(dir: new File(rootDir, 'library/rescue/util'), include: '*.jar')
+}
+
+sourceSets {
+    main.java.srcDirs = ['src/java']
+}
+
+repositories {
+    jcenter()
+}
+
+def defaultName = name
+
+jar {
+    destinationDir = new File(projectDir, 'tactics')
+    baseName = 'default'.equalsIgnoreCase(archiveName) ? defaultName : archiveName;
+    team = 'default'.equalsIgnoreCase(teamName) ? defaultName : teamName;
+    manifest.attributes('Team-Name': team)
+}
+
+[compileJava, compileTestJava].each {
+    it.options.encoding = 'UTF-8'
+    it.options.compilerArgs += ['-source', '1.8', '-target', '1.8']
+}
+javadoc.options.encoding = 'UTF-8'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}

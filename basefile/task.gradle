@@ -1,0 +1,34 @@
+import java.text.SimpleDateFormat
+
+def defaultName = name
+
+task start (type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = "adf.Main"
+    if (project.hasProperty('args')) {
+        args project.args.split('\\s+')
+    }
+    jvmArgs '-Xms512m', '-Xmx4g'
+}
+
+task backupSrc(type: Zip) {
+    SimpleDateFormat sdf = new SimpleDateFormat('yyyyMMddHHmmss')
+    String date = sdf.format(Calendar.getInstance().getTime())
+    ////////////////////////////////////////////////////////////////////////////
+    destinationDir = file('backup')//new File(rootDir, 'backup')
+    def newTeamName = 'default'.equalsIgnoreCase(archiveName) ? defaultName : archiveName;
+    String buildName = newTeamName + '-source-' + date
+    archiveName = buildName + '.zip'
+    ////////////////////////////////////////////////////////////////////////////
+    into(buildName) {
+        into('src') {
+            from 'src'
+        }
+        into('config') {
+            from 'config'
+        }
+        from 'build.gradle'
+        from 'gradle.properties'
+        from 'tool.gradle'
+    }
+}
