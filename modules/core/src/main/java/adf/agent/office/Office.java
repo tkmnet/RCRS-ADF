@@ -2,6 +2,7 @@ package adf.agent.office;
 
 import adf.agent.Agent;
 import adf.control.Control;
+import adf.util.datastorage.DataStorage;
 import rescuecore2.messages.Command;
 import rescuecore2.standard.entities.StandardEntity;
 import rescuecore2.worldmodel.ChangeSet;
@@ -14,13 +15,11 @@ import java.util.Collection;
 public abstract class Office<E extends StandardEntity> extends Agent<E>
 {
 	Control rootControl;
-	boolean isPrecompute;
 
-	public Office(Control control, boolean isPrecompute)
+	public Office(Control control, boolean isPrecompute, String datastorageName)
 	{
-		super(isPrecompute);
+		super(isPrecompute, datastorageName);
 		this.rootControl = control;
-		this.isPrecompute = isPrecompute;
 	}
 
 	@Override

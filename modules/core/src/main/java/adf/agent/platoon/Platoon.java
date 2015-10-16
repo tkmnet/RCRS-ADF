@@ -14,13 +14,11 @@ import java.util.Collection;
 public abstract class Platoon<E extends StandardEntity> extends Agent<E>
 {
 	Tactics rootTactics;
-	boolean isPrecompute;
 
-	public Platoon(Tactics tactics, boolean isPrecompute)
+	public Platoon(Tactics tactics, boolean isPrecompute, String dataStorageName)
 	{
-		super(isPrecompute);
+		super(isPrecompute, dataStorageName);
 		this.rootTactics = tactics;
-		this.isPrecompute = isPrecompute;
 	}
 
 	@Override

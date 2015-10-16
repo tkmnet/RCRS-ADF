@@ -3,6 +3,7 @@ package adf.agent.platoon;
 import adf.agent.info.AgentInfo;
 import adf.tactics.Tactics;
 import adf.tactics.TacticsFire;
+import adf.util.datastorage.DataStorage;
 import rescuecore2.messages.Command;
 import rescuecore2.standard.entities.FireBrigade;
 import rescuecore2.standard.entities.PoliceForce;
@@ -18,7 +19,7 @@ public class PlatoonFire extends Platoon<FireBrigade>
 {
 	public PlatoonFire(TacticsFire tactics, boolean isPrecompute)
 	{
-		super(tactics, isPrecompute);
+		super(tactics, isPrecompute, DATASTORAGE_FILE_NAME_FIRE);
 	}
 
 	@Override

@@ -16,13 +16,25 @@ import java.util.*;
  */
 public abstract class Agent<E extends StandardEntity> extends AbstractAgent<StandardWorldModel, E>
 {
+	final protected static String DATASTORAGE_FILE_NAME_AMBULANCE = "ambulance.bin";
+	final protected static String DATASTORAGE_FILE_NAME_FIRE = "fire.bin";
+	final protected static String DATASTORAGE_FILE_NAME_POLICE = "police.bin";
+
 	public AgentInfo agentInfo;
 	public WorldInfo worldInfo;
 	public ScenarioInfo scenarioInfo;
 	protected DataStorage dataStorage;
+	protected  boolean isPrecompute;
 
-	public Agent(boolean isPrecompute)
+	public Agent(boolean isPrecompute, String dataStorageName)
 	{
+		this.isPrecompute = isPrecompute;
+
+		if (isPrecompute)
+		{
+			DataStorage.removeData(dataStorageName);
+		}
+		dataStorage = new DataStorage(dataStorageName);
 	}
 
 	@Override
