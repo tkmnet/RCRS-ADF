@@ -10,7 +10,7 @@ import adf.tactics.TacticsPolice;
 /**
  * Created by takamin on 10/13/15.
  */
-abstract public class AbstractTeam
+abstract public class AbstractLoader
 {
 	abstract public String getTeamName();
 

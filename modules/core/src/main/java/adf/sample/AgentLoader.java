@@ -1,5 +1,8 @@
 package adf.sample;
 
+import adf.control.ControlAmbulance;
+import adf.control.ControlFire;
+import adf.control.ControlPolice;
 import adf.launcher.AbstractLoader;
 import adf.sample.ambulance.tactics.MyTacticsAmbulance;
 import adf.sample.fire.tactics.MyTacticsFire;
@@ -13,6 +16,12 @@ import adf.tactics.TacticsPolice;
  */
 public class AgentLoader extends AbstractLoader
 {
+	@Override
+	public String getTeamName()
+	{
+		return "MyTeam";
+	}
+
 	@Override
 	public TacticsAmbulance getTacticsAmbulance()
 	{
@@ -29,5 +38,23 @@ public class AgentLoader extends AbstractLoader
 	public TacticsPolice getTacticsPolice()
 	{
 		return new MyTacticsPolice();
+	}
+
+	@Override
+	public ControlAmbulance getControlAmbulance()
+	{
+		return null;
+	}
+
+	@Override
+	public ControlFire getControlFire()
+	{
+		return null;
+	}
+
+	@Override
+	public ControlPolice getControlPolice()
+	{
+		return null;
 	}
 }
