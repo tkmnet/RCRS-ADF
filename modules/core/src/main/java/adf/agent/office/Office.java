@@ -29,22 +29,24 @@ public abstract class Office<E extends StandardEntity> extends Agent<E>
 		//model.indexClass(StandardEntityURN.ROAD);
 		//distance = config.getIntValue(DISTANCE_KEY);
 
-		rootControl.initialize();
+		rootControl.initialize(agentInfo, worldInfo, scenarioInfo);
 
 		switch (scenarioInfo.getMode())
 		{
 			case NON_PRECOMPUTE:
-				rootControl.preparate();
+				rootControl.preparate(agentInfo, worldInfo, scenarioInfo);
 				break;
 			case PRECOMPUTED:
-				rootControl.resume();
+				rootControl.resume(agentInfo, worldInfo, scenarioInfo, dataStorage);
 				break;
+			default:
+				System.exit(0);
 		}
 	}
 
 	@Override
 	protected void think(int time, ChangeSet changed, Collection<Command> heard)
 	{
-		rootControl.think();
+		rootControl.think(agentInfo, worldInfo, scenarioInfo);
 	}
 }

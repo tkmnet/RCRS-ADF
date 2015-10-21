@@ -1,5 +1,10 @@
 package adf.control;
 
+import adf.agent.info.AgentInfo;
+import adf.agent.info.ScenarioInfo;
+import adf.agent.info.WorldInfo;
+import adf.util.datastorage.DataStorage;
+
 /**
  * Created by takamin on 10/13/15.
  */
@@ -17,10 +22,10 @@ public abstract class Control
 		this(null);
 	}
 
-	abstract public void initialize();
-	abstract public void resume();
-	abstract public void preparate();
-	abstract public void think();
+	abstract public void initialize(AgentInfo agentInfo, WorldInfo worldInfo, ScenarioInfo scenarioInfo);
+	abstract public void resume(AgentInfo agentInfo, WorldInfo worldInfo, ScenarioInfo scenarioInfo, DataStorage dataStorage);
+	abstract public void preparate(AgentInfo agentInfo, WorldInfo worldInfo, ScenarioInfo scenarioInfo);
+	abstract public void think(AgentInfo agentInfo, WorldInfo worldInfo, ScenarioInfo scenarioInfo);
 
 	public Control getParentControl()
 	{

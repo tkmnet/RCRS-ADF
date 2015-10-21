@@ -28,25 +28,28 @@ public abstract class Platoon<E extends StandardEntity> extends Agent<E>
 		//model.indexClass(StandardEntityURN.ROAD);
 		//distance = config.getIntValue(DISTANCE_KEY);
 
-		rootTactics.initialize();
+		rootTactics.initialize(agentInfo, worldInfo, scenarioInfo);
 
 		switch (scenarioInfo.getMode())
 		{
 			case NON_PRECOMPUTE:
-				rootTactics.preparate();
+				rootTactics.preparate(agentInfo, worldInfo, scenarioInfo);
 				break;
 			case PRECOMPUTATION_PHASE:
-				rootTactics.precompute();
+				rootTactics.precompute(agentInfo, worldInfo, scenarioInfo, dataStorage);
+				System.exit(0);
 				break;
 			case PRECOMPUTED:
-				rootTactics.resume();
+				rootTactics.resume(agentInfo, worldInfo, scenarioInfo, dataStorage);
 				break;
+			default:
+				System.exit(0);
 		}
 	}
 
 	@Override
 	protected void think(int time, ChangeSet changed, Collection<Command> heard)
 	{
-		rootTactics.think();
+		rootTactics.think(agentInfo, worldInfo, scenarioInfo);
 	}
 }

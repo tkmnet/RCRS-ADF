@@ -23,7 +23,7 @@ public class AgentConnector
 
 	private Config config;
 
-	private AbstractTeam team;
+	private AbstractLoader loader;
 
 	private List<Connector> connectorList;
 

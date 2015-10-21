@@ -20,6 +20,7 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 	final protected static String DATASTORAGE_FILE_NAME_FIRE = "fire.bin";
 	final protected static String DATASTORAGE_FILE_NAME_POLICE = "police.bin";
 
+	ScenarioInfo.Mode mode;
 	public AgentInfo agentInfo;
 	public WorldInfo worldInfo;
 	public ScenarioInfo scenarioInfo;
@@ -33,8 +34,22 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 		if (isPrecompute)
 		{
 			DataStorage.removeData(dataStorageName);
+			this.mode = ScenarioInfo.Mode.PRECOMPUTATION_PHASE;
 		}
+
 		dataStorage = new DataStorage(dataStorageName);
+
+		if (!isPrecompute)
+		{
+			if (dataStorage.isReady())
+			{
+				this.mode = ScenarioInfo.Mode.PRECOMPUTED;
+			}
+			else
+			{
+				this.mode = ScenarioInfo.Mode.NON_PRECOMPUTE;
+			}
+		}
 	}
 
 	@Override
@@ -67,8 +82,9 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 			model.index();
 		}
 
-		worldInfo = new WorldInfo(model);
-		scenarioInfo = new ScenarioInfo(config);
+		this.agentInfo = new AgentInfo();
+		this.worldInfo = new WorldInfo(model);
+		this.scenarioInfo = new ScenarioInfo(config, mode);
 	}
 
 	protected boolean shouldIndex()
