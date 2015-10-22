@@ -4,6 +4,7 @@ import adf.agent.info.AgentInfo;
 import adf.tactics.Tactics;
 import adf.tactics.TacticsPolice;
 import adf.util.datastorage.DataStorage;
+import comlib.manager.MessageManager;
 import rescuecore2.messages.Command;
 import rescuecore2.standard.entities.FireBrigade;
 import rescuecore2.standard.entities.PoliceForce;
@@ -29,12 +30,7 @@ public class PlatoonPolice extends Platoon<PoliceForce>
 	protected void postConnect()
 	{
 		super.postConnect();
-		agentInfo = new AgentInfo();
-	}
-
-	@Override
-	protected void think(int time, ChangeSet changed, Collection<Command> heard)
-	{
-		super.think(time, changed, heard);
+		MessageManager messageManager = new MessageManager(config, this.getID());
+		this.agentInfo = new AgentInfo(this, model, config, messageManager);
 	}
 }

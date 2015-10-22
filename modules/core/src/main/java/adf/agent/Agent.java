@@ -87,9 +87,6 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 
 		this.ignoreTime = config.getIntValue(kernel.KernelConstants.IGNORE_AGENT_COMMANDS_KEY);
 
-		MessageManager messageManager = new MessageManager(config, this.getID());
-
-		this.agentInfo = new AgentInfo(this, model, config, messageManager);
 		this.worldInfo = new WorldInfo(model);
 		this.scenarioInfo = new ScenarioInfo(config, mode);
 	}
@@ -116,7 +113,7 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 		}
 	}
 
-	abstract void think();
+	abstract protected void think();
 
 	protected boolean shouldIndex()
 	{
