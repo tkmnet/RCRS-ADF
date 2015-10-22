@@ -66,7 +66,7 @@ public class AgentConnector
 		System.out.println("[START] Connect Server (host:" + host + ", port:" + port + ")");
 		for (Connector connector : this.connectorList)
 		{
-			connector.connect(launcher, this.config, this.team);
+			connector.connect(launcher, this.config, this.loader);
 		}
 		System.out.println("[END  ] Success Connect Server");
 	}

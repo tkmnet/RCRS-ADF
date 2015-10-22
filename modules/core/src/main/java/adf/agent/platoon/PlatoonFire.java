@@ -12,9 +12,6 @@ import rescuecore2.worldmodel.ChangeSet;
 
 import java.util.*;
 
-/**
- * Created by takamin on 10/12/15.
- */
 public class PlatoonFire extends Platoon<FireBrigade>
 {
 	public PlatoonFire(TacticsFire tactics, boolean isPrecompute)

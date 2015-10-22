@@ -6,9 +6,6 @@ import rescuecore2.messages.Message;
 import rescuecore2.standard.messages.AKRest;
 import rescuecore2.worldmodel.EntityID;
 
-/**
- * Created by takamin on 10/13/15.
- */
 public class ActionDummy extends Action
 {
 	public ActionDummy()

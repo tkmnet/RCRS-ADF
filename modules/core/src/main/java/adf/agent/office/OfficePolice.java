@@ -12,9 +12,6 @@ import rescuecore2.worldmodel.ChangeSet;
 import java.util.Collection;
 import java.util.EnumSet;
 
-/**
- * Created by takamin on 10/15/15.
- */
 public class OfficePolice extends Office<Building>
 {
 	public OfficePolice(ControlPolice control, boolean isPrecompute)

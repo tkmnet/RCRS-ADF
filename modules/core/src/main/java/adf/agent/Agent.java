@@ -4,16 +4,18 @@ import adf.agent.info.AgentInfo;
 import adf.agent.info.ScenarioInfo;
 import adf.agent.info.WorldInfo;
 import adf.util.datastorage.DataStorage;
+import comlib.manager.MessageManager;
 import rescuecore2.components.AbstractAgent;
+import rescuecore2.messages.Command;
+import rescuecore2.messages.Message;
 import rescuecore2.standard.entities.StandardEntity;
 import rescuecore2.standard.entities.StandardEntityURN;
 import rescuecore2.standard.entities.StandardWorldModel;
+import rescuecore2.standard.messages.AKSubscribe;
+import rescuecore2.worldmodel.ChangeSet;
 
 import java.util.*;
 
-/**
- * Created by takamin on 10/12/15.
- */
 public abstract class Agent<E extends StandardEntity> extends AbstractAgent<StandardWorldModel, E>
 {
 	final protected static String DATASTORAGE_FILE_NAME_AMBULANCE = "ambulance.bin";
@@ -26,6 +28,7 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 	public ScenarioInfo scenarioInfo;
 	protected DataStorage dataStorage;
 	protected  boolean isPrecompute;
+	int ignoreTime;
 
 	public Agent(boolean isPrecompute, String dataStorageName)
 	{
@@ -82,10 +85,38 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 			model.index();
 		}
 
-		this.agentInfo = new AgentInfo();
+		this.ignoreTime = config.getIntValue(kernel.KernelConstants.IGNORE_AGENT_COMMANDS_KEY);
+
+		MessageManager messageManager = new MessageManager(config, this.getID());
+
+		this.agentInfo = new AgentInfo(this, model, config, messageManager);
 		this.worldInfo = new WorldInfo(model);
 		this.scenarioInfo = new ScenarioInfo(config, mode);
 	}
+
+	@Override
+	protected void think(int time, ChangeSet changed, Collection<Command> heard)
+	{
+		this.agentInfo.setTime(time);
+
+		if (time <= this.ignoreTime)
+		{
+			send(new AKSubscribe(getID(), time, 1));
+		}
+		else
+		{
+			this.agentInfo.setHeard(heard);
+		}
+
+		think();
+
+		if (time > this.ignoreTime)
+		{
+			this.send(this.agentInfo.createSendMessage());
+		}
+	}
+
+	abstract void think();
 
 	protected boolean shouldIndex()
 	{
@@ -100,5 +131,15 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 	public double getY()
 	{
 		return me().getLocation(model).second();
+	}
+
+	public void send(Message[] msgs)
+	{
+		for(Message msg : msgs) super.send(msg);
+	}
+
+	public void send(List<Message> msgs)
+	{
+		for(Message msg : msgs) super.send(msg);
 	}
 }

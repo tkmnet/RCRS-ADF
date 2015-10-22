@@ -6,9 +6,6 @@ import adf.agent.info.WorldInfo;
 import adf.agent.platoon.action.Action;
 import adf.util.datastorage.DataStorage;
 
-/**
- * Created by takamin on 10/13/15.
- */
 public abstract class Tactics
 {
 	private Tactics parentTactics;

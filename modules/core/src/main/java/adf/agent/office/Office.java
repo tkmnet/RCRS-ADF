@@ -9,9 +9,6 @@ import rescuecore2.worldmodel.ChangeSet;
 
 import java.util.Collection;
 
-/**
- * Created by takamin on 10/12/15.
- */
 public abstract class Office<E extends StandardEntity> extends Agent<E>
 {
 	Control rootControl;
@@ -44,8 +41,7 @@ public abstract class Office<E extends StandardEntity> extends Agent<E>
 		}
 	}
 
-	@Override
-	protected void think(int time, ChangeSet changed, Collection<Command> heard)
+	protected void think()
 	{
 		rootControl.think(agentInfo, worldInfo, scenarioInfo);
 	}

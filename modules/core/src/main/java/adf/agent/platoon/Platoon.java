@@ -8,9 +8,6 @@ import rescuecore2.worldmodel.ChangeSet;
 
 import java.util.Collection;
 
-/**
- * Created by takamin on 10/12/15.
- */
 public abstract class Platoon<E extends StandardEntity> extends Agent<E>
 {
 	Tactics rootTactics;
@@ -37,6 +34,8 @@ public abstract class Platoon<E extends StandardEntity> extends Agent<E>
 				break;
 			case PRECOMPUTATION_PHASE:
 				rootTactics.precompute(agentInfo, worldInfo, scenarioInfo, dataStorage);
+				dataStorage.setReady(true);
+				dataStorage.write();
 				System.exit(0);
 				break;
 			case PRECOMPUTED:
@@ -47,8 +46,7 @@ public abstract class Platoon<E extends StandardEntity> extends Agent<E>
 		}
 	}
 
-	@Override
-	protected void think(int time, ChangeSet changed, Collection<Command> heard)
+	protected void think()
 	{
 		rootTactics.think(agentInfo, worldInfo, scenarioInfo);
 	}

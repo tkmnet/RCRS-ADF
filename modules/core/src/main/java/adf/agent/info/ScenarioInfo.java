@@ -2,9 +2,6 @@ package adf.agent.info;
 
 import rescuecore2.config.Config;
 
-/**
- * Created by takamin on 10/12/15.
- */
 public class ScenarioInfo
 {
 	public enum Mode
