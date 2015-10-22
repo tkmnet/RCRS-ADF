@@ -11,7 +11,8 @@ import java.util.Map;
 public class ConfigInitializer
 {
 
-	public static Config getConfig(File configPath, String[] args)
+	public static Config
+	getConfig(File configPath, String[] args)
 	{
 		Config commandLine = analysis(args);
 		//File configDir = new File(System.getProperty("user.dir"), "config");
@@ -39,9 +40,16 @@ public class ConfigInitializer
 	{
 		Config config = new Config();
 		Map<String, Option> options = initOption();
-		for (String str : args)
-		{
-			String[] strArray = str.split(":");
+
+		config.setValue(ConfigKey.KEY_AMBULANCE_TEAM_NAME, args[0]);
+		config.setValue(ConfigKey.KEY_FIRE_BRIGADE_NAME, args[1]);
+		config.setValue(ConfigKey.KEY_POLICE_FORCE_NAME, args[2]);
+		config.setValue(ConfigKey.KEY_AMBULANCE_CENTRE_NAME, args[3]);
+		config.setValue(ConfigKey.KEY_FIRE_STATION_NAME, args[4]);
+		config.setValue(ConfigKey.KEY_POLICE_OFFICE_NAME, args[5]);
+
+		for (int i = 6; i < args.length; i++) {
+			String[] strArray = args[i].split(":");
 			Option option = options.get(strArray[0]);
 			if (option != null)
 			{
