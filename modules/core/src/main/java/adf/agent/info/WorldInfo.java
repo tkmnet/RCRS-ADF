@@ -2,9 +2,6 @@ package adf.agent.info;
 
 import rescuecore2.standard.entities.StandardWorldModel;
 
-/**
- * Created by takamin on 10/12/15.
- */
 public class WorldInfo
 {
 	StandardWorldModel world;

@@ -5,9 +5,6 @@ import adf.agent.info.ScenarioInfo;
 import adf.agent.info.WorldInfo;
 import adf.util.datastorage.DataStorage;
 
-/**
- * Created by takamin on 10/13/15.
- */
 public abstract class Control
 {
 	private Control parentControl;

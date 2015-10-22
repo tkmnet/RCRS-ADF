@@ -1,8 +1,51 @@
 package adf.agent.info;
 
-/**
- * Created by takamin on 10/12/15.
- */
+import adf.agent.Agent;
+import comlib.manager.MessageManager;
+import comlib.message.CommunicationMessage;
+import rescuecore2.config.Config;
+import rescuecore2.messages.Command;
+import rescuecore2.messages.Message;
+import rescuecore2.standard.entities.StandardWorldModel;
+
+import java.util.Collection;
+import java.util.List;
+
 public class AgentInfo
 {
+	Agent agent;
+	StandardWorldModel world;
+	Config config;
+	MessageManager messageManager;
+	int time;
+
+	public AgentInfo(Agent agent, StandardWorldModel world, Config config, MessageManager messageManager)
+	{
+		this.agent = agent;
+		this.world = world;
+		this.config = config;
+		this.messageManager = messageManager;
+		this.time = 0;
+	}
+
+	public void setTime(int time)
+	{
+		this.time = time;
+	}
+
+	public void setHeard(Collection<Command> heard)
+	{
+		this.messageManager.receiveMessage(time, heard);
+	}
+
+	public List<Message> createSendMessage()
+	{
+		return this.messageManager.createSendMessage(agent.getID());
+	}
+
+	public List<CommunicationMessage> getReceivedMessage()
+	{
+		return this.messageManager.getReceivedMessage();
+	}
+
 }
