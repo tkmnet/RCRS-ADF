@@ -1,5 +1,6 @@
 package adf.agent.info;
 
+import rescuecore2.Constants;
 import rescuecore2.config.Config;
 
 public class ScenarioInfo
@@ -33,5 +34,10 @@ public class ScenarioInfo
 	public Mode getMode()
 	{
 		return mode;
+	}
+
+	public void test()
+	{
+		config.getIntValue("fire.exthinguish.max-sum");
 	}
 }
