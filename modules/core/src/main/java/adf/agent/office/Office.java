@@ -37,7 +37,7 @@ public abstract class Office<E extends StandardEntity> extends Agent<E>
 				rootControl.resume(agentInfo, worldInfo, scenarioInfo, dataStorage);
 				break;
 			default:
-				System.exit(0);
+				shutdown();
 		}
 	}
 

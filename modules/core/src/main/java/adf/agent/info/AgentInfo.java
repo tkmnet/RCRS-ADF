@@ -7,6 +7,7 @@ import rescuecore2.config.Config;
 import rescuecore2.messages.Command;
 import rescuecore2.messages.Message;
 import rescuecore2.standard.entities.StandardWorldModel;
+import rescuecore2.worldmodel.EntityID;
 
 import java.util.Collection;
 import java.util.List;
@@ -43,9 +44,24 @@ public class AgentInfo
 		return this.messageManager.createSendMessage(agent.getID());
 	}
 
+
 	public List<CommunicationMessage> getReceivedMessage()
 	{
 		return this.messageManager.getReceivedMessage();
 	}
 
+	public EntityID getID()
+	{
+		return agent.getID();
+	}
+
+	public double getX()
+	{
+		return agent.getX();
+	}
+
+	public double getY()
+	{
+		return agent.getY();
+	}
 }

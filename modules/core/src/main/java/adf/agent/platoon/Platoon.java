@@ -36,13 +36,13 @@ public abstract class Platoon<E extends StandardEntity> extends Agent<E>
 				rootTactics.precompute(agentInfo, worldInfo, scenarioInfo, dataStorage);
 				dataStorage.setReady(true);
 				dataStorage.write();
-				System.exit(0);
+				shutdown();
 				break;
 			case PRECOMPUTED:
 				rootTactics.resume(agentInfo, worldInfo, scenarioInfo, dataStorage);
 				break;
 			default:
-				System.exit(0);
+				shutdown();
 		}
 	}
 
