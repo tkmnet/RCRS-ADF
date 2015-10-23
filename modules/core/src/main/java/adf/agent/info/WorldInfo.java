@@ -4,7 +4,7 @@ import rescuecore2.standard.entities.StandardWorldModel;
 
 public class WorldInfo
 {
-	StandardWorldModel world;
+	public StandardWorldModel world;
 
 	public WorldInfo(StandardWorldModel world)
 	{

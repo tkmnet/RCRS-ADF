@@ -12,7 +12,7 @@ public class ScenarioInfo
 		PRECOMPUTATION_PHASE
 	}
 
-	Config config;
+	public Config config;
 	Mode mode;
 
 	public ScenarioInfo(Config config, Mode mode)
