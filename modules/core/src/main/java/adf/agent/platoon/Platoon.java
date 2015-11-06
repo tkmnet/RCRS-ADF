@@ -1,7 +1,10 @@
 package adf.agent.platoon;
 
 import adf.agent.Agent;
+import adf.agent.info.AgentInfo;
+import adf.agent.platoon.action.Action;
 import adf.tactics.Tactics;
+import comlib.manager.MessageManager;
 import rescuecore2.messages.Command;
 import rescuecore2.standard.entities.StandardEntity;
 import rescuecore2.worldmodel.ChangeSet;
@@ -25,6 +28,9 @@ public abstract class Platoon<E extends StandardEntity> extends Agent<E>
 		//model.indexClass(StandardEntityURN.ROAD);
 		//distance = config.getIntValue(DISTANCE_KEY);
 
+		MessageManager messageManager = new MessageManager(config, this.getID());
+		this.agentInfo = new AgentInfo(this, model, config, messageManager);
+
 		rootTactics.initialize(agentInfo, worldInfo, scenarioInfo);
 
 		switch (scenarioInfo.getMode())
@@ -36,18 +42,19 @@ public abstract class Platoon<E extends StandardEntity> extends Agent<E>
 				rootTactics.precompute(agentInfo, worldInfo, scenarioInfo, dataStorage);
 				dataStorage.setReady(true);
 				dataStorage.write();
-				shutdown();
 				break;
 			case PRECOMPUTED:
 				rootTactics.resume(agentInfo, worldInfo, scenarioInfo, dataStorage);
 				break;
 			default:
-				shutdown();
 		}
 	}
 
 	protected void think()
 	{
-		rootTactics.think(agentInfo, worldInfo, scenarioInfo);
+		Action action = rootTactics.think(agentInfo, worldInfo, scenarioInfo);
+		if(action != null) {
+			send(action.getCommand(this.getID(), this.agentInfo.time));
+		}
 	}
 }

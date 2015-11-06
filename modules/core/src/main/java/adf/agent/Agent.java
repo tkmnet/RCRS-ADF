@@ -100,10 +100,11 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 		{
 			send(new AKSubscribe(getID(), time, 1));
 		}
-		else
-		{
+		//else
+		//{
 			this.agentInfo.setHeard(heard);
-		}
+			this.agentInfo.setChanged(changed);
+		//}
 
 		think();
 

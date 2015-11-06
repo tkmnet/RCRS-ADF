@@ -33,7 +33,5 @@ public class PlatoonAmbulance extends Platoon<AmbulanceTeam>
 	protected void postConnect()
 	{
 		super.postConnect();
-		MessageManager messageManager = new MessageManager(config, this.getID());
-		this.agentInfo = new AgentInfo(this, model, config, messageManager);
 	}
 }

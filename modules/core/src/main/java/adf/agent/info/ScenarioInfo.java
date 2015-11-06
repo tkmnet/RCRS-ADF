@@ -13,7 +13,7 @@ public class ScenarioInfo
 	}
 
 	public Config config;
-	Mode mode;
+	public Mode mode;
 
 	public ScenarioInfo(Config config, Mode mode)
 	{
@@ -36,8 +36,10 @@ public class ScenarioInfo
 		return mode;
 	}
 
+	/*
 	public void test()
 	{
 		config.getIntValue("fire.exthinguish.max-sum");
 	}
+	*/
 }

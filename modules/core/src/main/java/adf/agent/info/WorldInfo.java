@@ -1,6 +1,7 @@
 package adf.agent.info;
 
 import rescuecore2.standard.entities.StandardWorldModel;
+import rescuecore2.worldmodel.ChangeSet;
 
 public class WorldInfo
 {
@@ -15,4 +16,5 @@ public class WorldInfo
 	{
 		this.world = world;
 	}
+
 }

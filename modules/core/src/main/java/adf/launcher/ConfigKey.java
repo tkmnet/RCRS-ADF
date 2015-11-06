@@ -7,6 +7,8 @@ public final class ConfigKey {
     //public static final String KEY_LOAD_RETRY   = "adf.team.load.retry";
     //public static final String KEY_DUMMY_SYSTEM = "adf.team.dummy.run";
 
+    public static final String KEY_LOADER_CLASS = "adf.launcher.loader";
+
     public static final String KEY_PRECOMPUTE = "adf.launcher.precompute";
 
     // Agent

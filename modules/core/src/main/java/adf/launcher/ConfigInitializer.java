@@ -41,14 +41,14 @@ public class ConfigInitializer
 		Config config = new Config();
 		Map<String, Option> options = initOption();
 
-		config.setValue(ConfigKey.KEY_AMBULANCE_TEAM_NAME, args[0]);
-		config.setValue(ConfigKey.KEY_FIRE_BRIGADE_NAME, args[1]);
-		config.setValue(ConfigKey.KEY_POLICE_FORCE_NAME, args[2]);
-		config.setValue(ConfigKey.KEY_AMBULANCE_CENTRE_NAME, args[3]);
-		config.setValue(ConfigKey.KEY_FIRE_STATION_NAME, args[4]);
-		config.setValue(ConfigKey.KEY_POLICE_OFFICE_NAME, args[5]);
+		config.setValue(ConfigKey.KEY_LOADER_CLASS, args[0]);
+		//config.setValue(ConfigKey.KEY_FIRE_BRIGADE_NAME, args[1]);
+		//config.setValue(ConfigKey.KEY_POLICE_FORCE_NAME, args[2]);
+		//config.setValue(ConfigKey.KEY_AMBULANCE_CENTRE_NAME, args[3]);
+		//config.setValue(ConfigKey.KEY_FIRE_STATION_NAME, args[4]);
+		//config.setValue(ConfigKey.KEY_POLICE_OFFICE_NAME, args[5]);
 
-		for (int i = 6; i < args.length; i++) {
+		for (int i = 1; i < args.length; i++) {
 			String[] strArray = args[i].split(":");
 			Option option = options.get(strArray[0]);
 			if (option != null)

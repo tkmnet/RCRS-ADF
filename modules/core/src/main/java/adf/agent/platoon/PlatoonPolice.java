@@ -30,7 +30,5 @@ public class PlatoonPolice extends Platoon<PoliceForce>
 	protected void postConnect()
 	{
 		super.postConnect();
-		MessageManager messageManager = new MessageManager(config, this.getID());
-		this.agentInfo = new AgentInfo(this, model, config, messageManager);
 	}
 }
