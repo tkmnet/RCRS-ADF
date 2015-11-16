@@ -9,6 +9,6 @@ import adf.agent.info.AgentInfo;
  */
 abstract public class CommunicationModule
 {
-    abstract void receive(AgentInfo agentInfo);
-    abstract void send(Agent agent);
+    abstract public void receive(Agent agent);
+    abstract public void send(Agent agent);
 }

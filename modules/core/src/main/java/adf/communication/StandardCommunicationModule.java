@@ -9,13 +9,13 @@ import adf.agent.info.AgentInfo;
 public class StandardCommunicationModule extends CommunicationModule
 {
     @Override
-    void receive(AgentInfo agentInfo)
+    public void receive(Agent agent)
     {
 
     }
 
     @Override
-    void send(Agent agent)
+    public void send(Agent agent)
     {
 
     }

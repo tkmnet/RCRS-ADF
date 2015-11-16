@@ -3,6 +3,8 @@ package adf.agent;
 import adf.agent.info.AgentInfo;
 import adf.agent.info.ScenarioInfo;
 import adf.agent.info.WorldInfo;
+import adf.communication.CommunicationModule;
+import adf.communication.StandardCommunicationModule;
 import adf.util.datastorage.DataStorage;
 import comlib.manager.MessageManager;
 import rescuecore2.components.AbstractAgent;
@@ -27,6 +29,7 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 	public WorldInfo worldInfo;
 	public ScenarioInfo scenarioInfo;
 	protected DataStorage dataStorage;
+	protected CommunicationModule communicationModule;
 	protected  boolean isPrecompute;
 	int ignoreTime;
 
@@ -89,6 +92,10 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 
 		this.worldInfo = new WorldInfo(model);
 		this.scenarioInfo = new ScenarioInfo(config, mode);
+
+		this.communicationModule = null;
+
+		System.out.println("Connected - " + this);
 	}
 
 	@Override
@@ -96,21 +103,37 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 	{
 		this.agentInfo.setTime(time);
 
+		if ( 1 == time )
+		{
+			if (this.communicationModule != null)
+			{
+				System.out.println("This agent's CommunicationModule is modified - " + this);
+			}
+			else
+			{
+				this.communicationModule = new StandardCommunicationModule();
+			}
+		}
+
 		if (time <= this.ignoreTime)
 		{
 			send(new AKSubscribe(getID(), time, 1));
 		}
-		//else
-		//{
-			this.agentInfo.setHeard(heard);
-			this.agentInfo.setChanged(changed);
-		//}
+
+        this.agentInfo.setHeard(heard);
+        this.agentInfo.setChanged(changed);
+
+		if (time > this.ignoreTime)
+		{
+			this.communicationModule.receive(this);
+		}
 
 		think();
 
 		if (time > this.ignoreTime)
 		{
-			this.send(this.agentInfo.createSendMessage());
+			this.communicationModule.receive(this);
+//			this.send(this.agentInfo.createSendMessage());
 		}
 	}
 
