@@ -69,16 +69,18 @@ public class AgentInfo
 		return agent.getY();
 	}
 
-	public EntityID getPosition() {
+	public EntityID getPosition()
+    {
 		return ((Human)this.world.getEntity(this.agent.getID())).getPosition();
 	}
 
-	public Area getLocation() {
+	public Area getLocation()
+	{
 		return (Area)this.world.getEntity(this.getPosition());
 	}
 
-
-	public void setChanged(ChangeSet changed) {
+	public void setChanged(ChangeSet changed)
+	{
 		this.changed = changed;
 	}
 }

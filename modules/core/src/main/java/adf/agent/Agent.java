@@ -132,7 +132,7 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 
 		if (time > this.ignoreTime)
 		{
-			this.communicationModule.receive(this);
+			this.communicationModule.send(this);
 //			this.send(this.agentInfo.createSendMessage());
 		}
 	}
