@@ -38,6 +38,11 @@ public class AgentInfo
 		this.time = time;
 	}
 
+	public int getTime()
+	{
+		return this.time;
+	}
+
 	public void setHeard(Collection<Command> heard)
 	{
 		this.messageManager.receiveMessage(time, heard);

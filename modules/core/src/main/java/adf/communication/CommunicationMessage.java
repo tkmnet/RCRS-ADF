@@ -1,6 +1,6 @@
 package adf.communication;
 
-public class CommunicationMessage
+abstract public class CommunicationMessage
 {
     private boolean isRadio;
 
@@ -13,4 +13,7 @@ public class CommunicationMessage
     {
         return this.isRadio;
     }
+
+    abstract public int getByteArraySize();
+    abstract public byte[] toByteArray();
 }
