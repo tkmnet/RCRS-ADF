@@ -13,6 +13,7 @@ import rescuecore2.worldmodel.ChangeSet;
 import rescuecore2.worldmodel.EntityID;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 public class AgentInfo
@@ -20,16 +21,15 @@ public class AgentInfo
 	public Agent agent;
 	public StandardWorldModel world;
 	public Config config;
-	public MessageManager messageManager;
 	public int time;
 	public ChangeSet changed;
+	private Collection<Command> heard;
 
-	public AgentInfo(Agent agent, StandardWorldModel world, Config config, MessageManager messageManager)
+	public AgentInfo(Agent agent, StandardWorldModel world, Config config)
 	{
 		this.agent = agent;
 		this.world = world;
 		this.config = config;
-		this.messageManager = messageManager;
 		this.time = 0;
 	}
 
@@ -45,18 +45,12 @@ public class AgentInfo
 
 	public void setHeard(Collection<Command> heard)
 	{
-		this.messageManager.receiveMessage(time, heard);
+		this.heard = heard;
 	}
 
-	public List<Message> createSendMessage()
+	public Collection<Command> getHeard()
 	{
-		return this.messageManager.createSendMessage(agent.getID());
-	}
-
-
-	public List<CommunicationMessage> getReceivedMessage()
-	{
-		return this.messageManager.getReceivedMessage();
+		return this.heard;
 	}
 
 	public EntityID getID()

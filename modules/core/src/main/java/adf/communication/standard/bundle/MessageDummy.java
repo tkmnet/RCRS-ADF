@@ -2,6 +2,7 @@ package adf.communication.standard.bundle;
 
 
 import adf.communication.standard.util.BitOutputStream;
+import adf.communication.standard.util.BitStreamReader;
 
 public class MessageDummy extends StandardMessage
 {
@@ -14,9 +15,10 @@ public class MessageDummy extends StandardMessage
 		dummyTest = test;
 	}
 
-	public MessageDummy(int time, int ttl, boolean isRadio, byte[] data)
+	public MessageDummy(boolean isRadio, int from, int ttl, BitStreamReader bitStreamReader)
 	{
-		super(time, ttl, isRadio);
+		super(isRadio, from, ttl, bitStreamReader);
+		dummyTest = bitStreamReader.getBits(SIZE_TEST);
 	}
 
 	public int getValue() { return this.dummyTest; }

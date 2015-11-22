@@ -13,13 +13,16 @@ public class MessageManager
     private HashMap<Integer, Class<CommunicationMessage>> messageClassMap;
     private HashMap<Class<CommunicationMessage>, Integer> messageClassIDMap;
     private List<CommunicationMessage> sendMessageList;
+    private List<CommunicationMessage> receivedMessageList;
+    private int heardAgentHelpCount;
 
     public MessageManager()
     {
-        standardMessageClassCount = 0;   // 00000
+        standardMessageClassCount = 1;   // 00001
         customMessageClassCount = 16;    // 10000
         messageClassMap = new HashMap<>(32);
         sendMessageList = new ArrayList<>();
+        heardAgentHelpCount = 0;
     }
 
     public boolean registerMessageClass(int index, Class<CommunicationMessage> messageClass)
@@ -81,8 +84,30 @@ public class MessageManager
         return this.sendMessageList;
     }
 
+    public void addReceivedMessage(CommunicationMessage message)
+    {
+        receivedMessageList.add(message);
+    }
+
+    public List<CommunicationMessage> getReceivedMessageList()
+    {
+        return this.receivedMessageList;
+    }
+
+    public void addHeardAgentHelpCount()
+    {
+        this.heardAgentHelpCount++;
+    }
+
+    public int getHeardAgentHelpCount()
+    {
+        return this.heardAgentHelpCount;
+    }
+
     public void refresh()
     {
-        sendMessageList.clear();
+        this.sendMessageList.clear();
+        this.receivedMessageList.clear();
+        this.heardAgentHelpCount = 0;
     }
 }

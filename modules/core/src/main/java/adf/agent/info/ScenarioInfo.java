@@ -165,4 +165,9 @@ public class ScenarioInfo
 	{
 		return config.getIntValue("scenario.agents.fs");
 	}
+
+	public int getVoiceMessagesSize()
+	{
+		return config.getIntValue("comms.channels.0.messages.size");
+	}
 }
