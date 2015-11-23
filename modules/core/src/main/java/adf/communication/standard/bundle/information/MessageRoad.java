@@ -1,12 +1,14 @@
-package comlib.message.information;
+package adf.communication.standard.bundle.information;
 
+import adf.communication.standard.bundle.StandardMessage;
+import adf.communication.util.BitStreamReader;
 import comlib.message.MessageMap;
 import comlib.message.MessageID;
 import rescuecore2.standard.entities.Road;
 import rescuecore2.standard.entities.Blockade;
 import rescuecore2.worldmodel.EntityID;
 
-public class MessageRoad extends MessageMap
+public class MessageRoad extends StandardMessage
 {
 	protected int rawRoadID;
 	protected int rawBlockadeID;
@@ -15,21 +17,37 @@ public class MessageRoad extends MessageMap
 	protected int blockadeRepairCost;
 	protected boolean roadPassable;
 
-	public MessageRoad(Road road, Blockade blockade, boolean isPassable)
+	public MessageRoad(boolean isRadio, Road road, Blockade blockade, boolean isPassable)
 	{
-		super(MessageID.roadMessage);
+		super(isRadio);
 		this.roadID = road.getID();
-		this.roadBlockadeID = blockade.getID();
-		this.blockadeRepairCost = blockade.getRepairCost();
+		if (blockade == null)
+		{
+			this.roadBlockadeID = new EntityID(0);
+			this.blockadeRepairCost = 0;
+		}
+		else
+		{
+			this.roadBlockadeID = blockade.getID();
+			this.blockadeRepairCost = blockade.getRepairCost();
+		}
 		this.roadPassable = isPassable;
 	}
 
-	public MessageRoad(int time, int ttl, int id, int blockadeID, int repairCost, boolean isPassable)
+	public MessageRoad(boolean isRadio, int from, int ttl, BitStreamReader bitStreamReader)
 	{
-		super(MessageID.roadMessage, time, ttl);
-		this.rawRoadID = id;
-		this.rawBlockadeID = blockadeID;
-		this.blockadeRepairCost = repairCost;
+		super(isRadio, from, ttl, bitStreamReader);
+		this.roadID = road.getID();
+		if (blockade == null)
+		{
+			this.roadBlockadeID = new EntityID(0);
+			this.blockadeRepairCost = 0;
+		}
+		else
+		{
+			this.roadBlockadeID = blockade.getID();
+			this.blockadeRepairCost = blockade.getRepairCost();
+		}
 		this.roadPassable = isPassable;
 	}
 

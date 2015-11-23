@@ -16,7 +16,7 @@ import java.util.Collection;
 
 public class StandardCommunicationModule extends CommunicationModule
 {
-    final private char ESCAPE_CHAR = 0xFE;
+    final private int ESCAPE_CHAR = 0xFE;
     final private int SIZE_ID = 5;
     final private int SIZE_TTL = 3;
 

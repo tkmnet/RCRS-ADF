@@ -1,5 +1,8 @@
-package comlib.message.information;
+package adf.communication.standard.bundle.information;
 
+import adf.communication.standard.bundle.StandardMessage;
+import adf.communication.util.BitOutputStream;
+import adf.communication.util.BitStreamReader;
 import comlib.message.MessageMap;
 
 import comlib.message.MessageID;
@@ -7,30 +10,34 @@ import rescuecore2.standard.entities.Building;
 import rescuecore2.worldmodel.EntityID;
 
 
-public class MessageBuilding extends MessageMap
+public class MessageBuilding extends StandardMessage
 {
+	private static final int SIZE_ID = 32;
+	private static final int SIZE_BROKENNESS = 32;
+	private static final int SIZE_FIERYNESS = 32;
+	private static final int SIZE_TEMPERATURE = 32;
 	protected int rawBuildingID;
 	protected EntityID buildingID;
 	protected int buildingBrokenness;
 	protected int buildingFieryness;
 	protected int buildingTemperature;
 
-	public MessageBuilding(Building building)
+	public MessageBuilding(boolean isRadio, Building building)
 	{
-		super(MessageID.buildingMessage);
+		super(isRadio);
 		this.buildingID = building.getID();
 		this.buildingBrokenness  = building.getBrokenness();
 		this.buildingFieryness  = building.getFieryness();
 		this.buildingTemperature  = building.getTemperature();
 	}
 
-	public MessageBuilding(int time, int ttl, int id, int brokenness, int fieryness, int temperature)
+	public MessageBuilding(boolean isRadio, int from, int ttl, BitStreamReader bitStreamReader)
 	{
-		super(MessageID.buildingMessage, time, ttl);
-		this.rawBuildingID = id;
-		this.buildingBrokenness = brokenness;
-		this.buildingFieryness = fieryness;
-		this.buildingTemperature  = temperature;
+		super(isRadio, from, ttl, bitStreamReader);
+		rawBuildingID = bitStreamReader.getBits(SIZE_ID);
+		buildingBrokenness = bitStreamReader.getBits(SIZE_BROKENNESS);
+		buildingFieryness = bitStreamReader.getBits(SIZE_FIERYNESS);
+		buildingTemperature = bitStreamReader.getBits(SIZE_TEMPERATURE);
 	}
 
 	public EntityID getBuildingID()
@@ -52,5 +59,20 @@ public class MessageBuilding extends MessageMap
 	public int getTemperature() {
         return this.buildingTemperature;
     }
+
+	@Override
+	public int getByteArraySize() {
+		return SIZE_ID + SIZE_BROKENNESS + SIZE_FIERYNESS + SIZE_TEMPERATURE;
+	}
+
+	@Override
+	public byte[] toByteArray() {
+		BitOutputStream bitOutputStream = new BitOutputStream();
+		bitOutputStream.writeBits(buildingID.getValue(), SIZE_ID);
+		bitOutputStream.writeBits(buildingBrokenness, SIZE_BROKENNESS);
+		bitOutputStream.writeBits(buildingFieryness, SIZE_FIERYNESS);
+		bitOutputStream.writeBits(buildingTemperature, SIZE_TEMPERATURE);
+		return bitOutputStream.toByteArray();
+	}
 }
 
