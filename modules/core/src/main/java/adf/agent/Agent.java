@@ -4,6 +4,7 @@ import adf.agent.info.AgentInfo;
 import adf.agent.info.ScenarioInfo;
 import adf.agent.info.WorldInfo;
 import adf.communication.CommunicationModule;
+import adf.communication.MessageManager;
 import adf.communication.standard.StandardCommunicationModule;
 import adf.util.datastorage.DataStorage;
 import rescuecore2.components.AbstractAgent;
@@ -28,6 +29,7 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 	public WorldInfo worldInfo;
 	public ScenarioInfo scenarioInfo;
 	protected DataStorage dataStorage;
+	protected MessageManager messageManager;
 	protected CommunicationModule communicationModule;
 	protected  boolean isPrecompute;
 	int ignoreTime;
@@ -43,6 +45,7 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 		}
 
 		dataStorage = new DataStorage(dataStorageName);
+		messageManager = new MessageManager();
 
 		if (!isPrecompute)
 		{
@@ -124,15 +127,15 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 
 		if (time > this.ignoreTime)
 		{
-			this.communicationModule.receive(this);
+			this.messageManager.refresh();
+			this.communicationModule.receive(this, messageManager);
 		}
 
 		think();
 
 		if (time > this.ignoreTime)
 		{
-			this.communicationModule.send(this);
-//			this.send(this.agentInfo.createSendMessage());
+			this.communicationModule.send(this, messageManager);
 		}
 	}
 
