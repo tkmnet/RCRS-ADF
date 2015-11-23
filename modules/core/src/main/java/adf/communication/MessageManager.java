@@ -10,8 +10,8 @@ public class MessageManager
 {
     private int standardMessageClassCount;
     private int customMessageClassCount;
-    private HashMap<Integer, Class<CommunicationMessage>> messageClassMap;
-    private HashMap<Class<CommunicationMessage>, Integer> messageClassIDMap;
+    private HashMap<Integer, Class<? extends CommunicationMessage>> messageClassMap;
+    private HashMap<Class<? extends CommunicationMessage>, Integer> messageClassIDMap;
     private List<CommunicationMessage> sendMessageList;
     private List<CommunicationMessage> receivedMessageList;
     private int heardAgentHelpCount;
@@ -21,11 +21,12 @@ public class MessageManager
         standardMessageClassCount = 1;   // 00001
         customMessageClassCount = 16;    // 10000
         messageClassMap = new HashMap<>(32);
+        messageClassIDMap = new HashMap<>(32);
         sendMessageList = new ArrayList<>();
         heardAgentHelpCount = 0;
     }
 
-    public boolean registerMessageClass(int index, Class<CommunicationMessage> messageClass)
+    public boolean registerMessageClass(int index, Class<? extends CommunicationMessage> messageClass)
     {
         if (index > 31)
         {
@@ -46,7 +47,7 @@ public class MessageManager
 
     public void registerMessageBundle(MessageBundle messageBundle)
     {
-        for (Class<CommunicationMessage> messageClass : messageBundle.getMessageClassList())
+        for (Class<? extends CommunicationMessage> messageClass : messageBundle.getMessageClassList())
         {
             this.registerMessageClass(
                     (messageBundle.getClass().equals(StandardMessageBundle.class) ? standardMessageClassCount++ : customMessageClassCount++),
@@ -54,7 +55,7 @@ public class MessageManager
         }
     }
 
-    public Class<CommunicationMessage> getMessageClass(int index)
+    public Class<? extends CommunicationMessage> getMessageClass(int index)
     {
         if (!messageClassMap.containsKey(index))
         {

@@ -6,6 +6,7 @@ import adf.agent.info.WorldInfo;
 import adf.communication.CommunicationModule;
 import adf.communication.MessageManager;
 import adf.communication.standard.StandardCommunicationModule;
+import adf.communication.standard.bundle.StandardMessageBundle;
 import adf.util.datastorage.DataStorage;
 import rescuecore2.components.AbstractAgent;
 import rescuecore2.messages.Command;
@@ -115,6 +116,7 @@ public abstract class Agent<E extends StandardEntity> extends AbstractAgent<Stan
 			{
 				this.communicationModule = new StandardCommunicationModule();
 			}
+			messageManager.registerMessageBundle(new StandardMessageBundle());
 		}
 
 		if (time <= this.ignoreTime)

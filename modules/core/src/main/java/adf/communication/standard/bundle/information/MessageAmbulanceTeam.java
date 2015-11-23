@@ -1,12 +1,13 @@
-package comlib.message.information;
+package adf.communication.standard.bundle.information;
 
+import adf.communication.standard.bundle.StandardMessage;
 import comlib.message.MessageHuman;
 import comlib.message.MessageID;
 import rescuecore2.standard.entities.AmbulanceTeam;
 import rescuecore2.worldmodel.EntityID;
 
 
-public class MessageAmbulanceTeam extends MessageHuman
+public class MessageAmbulanceTeam extends StandardMessage
 {
 	/* below id is same to information.MessageAmbulanceTeam */
 	public static final int ACTION_REST = 0;
@@ -40,6 +41,16 @@ public class MessageAmbulanceTeam extends MessageHuman
 		if ( myTargetID == null )
 		{ myTargetID = new EntityID(rawTargetID); }
 		return myTargetID;
+	}
+
+	@Override
+	public int getByteArraySize() {
+		return 0;
+	}
+
+	@Override
+	public byte[] toByteArray() {
+		return new byte[0];
 	}
 }
 

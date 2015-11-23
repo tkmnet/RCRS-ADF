@@ -1,7 +1,7 @@
 package adf.communication.standard.bundle;
 
 import adf.communication.CommunicationMessage;
-import adf.communication.standard.util.BitStreamReader;
+import adf.communication.util.BitStreamReader;
 import rescuecore2.worldmodel.EntityID;
 
 abstract public class StandardMessage extends CommunicationMessage

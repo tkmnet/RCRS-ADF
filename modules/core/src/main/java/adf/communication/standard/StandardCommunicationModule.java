@@ -4,20 +4,15 @@ import adf.agent.Agent;
 import adf.communication.CommunicationMessage;
 import adf.communication.CommunicationModule;
 import adf.communication.MessageManager;
-import adf.communication.standard.bundle.StandardMessage;
-import adf.communication.standard.util.BitOutputStream;
-import adf.communication.standard.util.BitStreamReader;
-import jdk.nashorn.internal.objects.annotations.Constructor;
+import adf.communication.util.BitOutputStream;
+import adf.communication.util.BitStreamReader;
 import rescuecore2.messages.Command;
 import rescuecore2.messages.Message;
 import rescuecore2.standard.messages.AKSay;
 import rescuecore2.standard.messages.AKSpeak;
 import rescuecore2.worldmodel.EntityID;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 public class StandardCommunicationModule extends CommunicationModule
 {

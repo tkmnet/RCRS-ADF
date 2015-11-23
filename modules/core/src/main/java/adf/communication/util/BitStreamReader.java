@@ -1,4 +1,4 @@
-package adf.communication.standard.util;
+package adf.communication.util;
 
 public class BitStreamReader {
 
