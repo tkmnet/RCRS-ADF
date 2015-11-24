@@ -1,6 +1,7 @@
 package adf.communication.standard.bundle.information;
 
 import adf.communication.standard.bundle.StandardMessage;
+import adf.communication.util.BitOutputStream;
 import adf.communication.util.BitStreamReader;
 import comlib.message.MessageHuman;
 import comlib.message.MessageID;
@@ -66,12 +67,19 @@ public class MessagePoliceForce extends StandardMessage
 
 	@Override
 	public int getByteArraySize() {
-		return 0;
+		return SIZE_HP + SIZE_BURIEDNESS + SIZE_DAMAGE + SIZE_POSITION + SIZE_TARGET + SIZE_ACTION;
 	}
 
 	@Override
 	public byte[] toByteArray() {
-		return new byte[0];
+		BitOutputStream bitOutputStream = new BitOutputStream();
+		bitOutputStream.writeBits(humanHP, SIZE_HP);
+		bitOutputStream.writeBits(humanBuriedness, SIZE_BURIEDNESS);
+		bitOutputStream.writeBits(humanDamage, SIZE_DAMAGE);
+		bitOutputStream.writeBits(humanPosition.getValue(), SIZE_POSITION);
+		bitOutputStream.writeBits(myTargetID.getValue(), SIZE_TARGET);
+		bitOutputStream.writeBits(myAction, SIZE_ACTION);
+		return bitOutputStream.toByteArray();
 	}
 
 	public int getHP() { return this.humanHP; }
