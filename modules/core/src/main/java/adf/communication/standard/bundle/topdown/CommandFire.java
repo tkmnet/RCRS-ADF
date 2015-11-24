@@ -1,6 +1,7 @@
 package adf.communication.standard.bundle.topdown;
 
 import adf.communication.standard.bundle.StandardMessage;
+import adf.communication.util.BitOutputStream;
 import adf.communication.util.BitStreamReader;
 import rescuecore2.worldmodel.EntityID;
 import comlib.message.MessageCommand;
@@ -13,6 +14,10 @@ public class CommandFire extends StandardMessage
 	public static final int ACTION_MOVE = 1;
 	public static final int ACTION_EXTINGUISH = 2;
 	public static final int ACTION_REFILL = 3;
+
+	private static final int SIZE_TO = 32;
+	private static final int SIZE_TARGET = 32;
+	private static final int SIZE_ACTION = 4;
 
 	protected int rawToID;
 	protected int rawTargetID;
@@ -31,6 +36,9 @@ public class CommandFire extends StandardMessage
 	public CommandFire(boolean isRadio, int from, int ttl, BitStreamReader bitStreamReader)
 	{
 		super(isRadio, from, ttl, bitStreamReader);
+		rawToID = bitStreamReader.getBits(SIZE_TO);
+		rawTargetID = bitStreamReader.getBits(SIZE_TARGET);
+		myAction = bitStreamReader.getBits(SIZE_ACTION);
 	}
 
 	public int getAction()
@@ -38,12 +46,16 @@ public class CommandFire extends StandardMessage
 
 	@Override
 	public int getByteArraySize() {
-		return 0;
+		return SIZE_TO + SIZE_TARGET + SIZE_ACTION;
 	}
 
 	@Override
 	public byte[] toByteArray() {
-		return new byte[0];
+		BitOutputStream bitOutputStream = new BitOutputStream();
+		bitOutputStream.writeBits(commandToID.getValue(), SIZE_TO);
+		bitOutputStream.writeBits(commandTargetID.getValue(), SIZE_TARGET);
+		bitOutputStream.writeBits(myAction, SIZE_ACTION);
+		return bitOutputStream.toByteArray();
 	}
 
 	public EntityID getToID()

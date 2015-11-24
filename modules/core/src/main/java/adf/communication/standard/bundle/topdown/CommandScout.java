@@ -1,6 +1,7 @@
 package adf.communication.standard.bundle.topdown;
 
 import adf.communication.standard.bundle.StandardMessage;
+import adf.communication.util.BitOutputStream;
 import adf.communication.util.BitStreamReader;
 import rescuecore2.worldmodel.EntityID;
 import comlib.message.MessageCommand;
@@ -8,6 +9,10 @@ import comlib.message.MessageID;
 
 public class CommandScout extends StandardMessage
 {
+	private static final int SIZE_TO = 32;
+	private static final int SIZE_TARGET = 32;
+	private static final int SIZE_RANGE = 32;
+
 	protected int rawToID;
 	protected int rawTargetID;
 	protected EntityID commandToID;
@@ -16,7 +21,7 @@ public class CommandScout extends StandardMessage
 
 	public CommandScout(boolean isRadio, EntityID toID, EntityID targetID, int range)
 	{
-        super(isRadio);
+		super(isRadio);
 		this.commandToID = toID;
 		this.commandTargetID = targetID;
 		this.scoutRange = range;
@@ -25,6 +30,9 @@ public class CommandScout extends StandardMessage
 	public CommandScout(boolean isRadio, int from, int ttl, BitStreamReader bitStreamReader)
 	{
 		super(isRadio, from, ttl, bitStreamReader);
+		rawToID = bitStreamReader.getBits(SIZE_TO);
+		rawTargetID = bitStreamReader.getBits(SIZE_TARGET);
+		scoutRange = bitStreamReader.getBits(SIZE_RANGE);
 	}
 
 	public int getRange()
@@ -32,12 +40,16 @@ public class CommandScout extends StandardMessage
 
 	@Override
 	public int getByteArraySize() {
-		return 0;
+		return SIZE_TO + SIZE_TARGET + SIZE_RANGE;
 	}
 
 	@Override
 	public byte[] toByteArray() {
-		return new byte[0];
+		BitOutputStream bitOutputStream = new BitOutputStream();
+		bitOutputStream.writeBits(commandToID.getValue(), SIZE_TO);
+		bitOutputStream.writeBits(commandTargetID.getValue(), SIZE_TARGET);
+		bitOutputStream.writeBits(scoutRange, SIZE_RANGE);
+		return bitOutputStream.toByteArray();
 	}
 
 	public EntityID getToID()
