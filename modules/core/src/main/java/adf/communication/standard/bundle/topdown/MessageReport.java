@@ -1,32 +1,25 @@
-package comlib.message.topdown;
+package adf.communication.standard.bundle.topdown;
 
-import comlib.message.CommunicationMessage;
-import comlib.message.MessageID;
+import adf.communication.standard.bundle.StandardMessage;
+import adf.communication.util.BitOutputStream;
+import adf.communication.util.BitStreamReader;
 import rescuecore2.worldmodel.EntityID;
 
-public class MessageReport extends CommunicationMessage
+public class MessageReport extends StandardMessage
 {
-	private int rawFromID;
-	private EntityID reportFromID;
+	private static final int SIZE_DONE = 1;
 	private boolean reportDone;
 
-	public MessageReport(boolean isDone)
+	public MessageReport(boolean isRadio, boolean isDone)
 	{
-		super(MessageID.reportMessage);
+		super(isRadio);
 		reportDone = isDone;
 	}
 
-	public MessageReport(int time, int ttl, boolean isDone)
+	public MessageReport(boolean isRadio, int from, int ttl, BitStreamReader bitStreamReader)
 	{
-		super(MessageID.reportMessage, time, ttl);
-		reportDone = isDone;
-	}
-
-	public EntityID getFromID()
-	{
-		if ( reportFromID == null )
-		{ reportFromID = new EntityID(rawFromID); }
-		return reportFromID;
+		super(isRadio, from, ttl, bitStreamReader);
+		reportDone = (0 == bitStreamReader.getBits(SIZE_DONE)?false:true);
 	}
 
 	public boolean isDone()
@@ -34,4 +27,16 @@ public class MessageReport extends CommunicationMessage
 
 	public boolean isFailed()
 	{ return !this.reportDone; }
+
+	@Override
+	public int getByteArraySize() {
+		return SIZE_DONE;
+	}
+
+	@Override
+	public byte[] toByteArray() {
+		BitOutputStream bitOutputStream = new BitOutputStream();
+		bitOutputStream.writeBits((reportDone?1:0), SIZE_DONE);
+		return bitOutputStream.toByteArray();
+	}
 }
